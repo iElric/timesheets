@@ -12,7 +12,18 @@
     <div class="container">
       <nav class="navbar navbar-expand-sm navbar-light bg-white">
         <div class="col-4">
-          <a class="navbar-brand" href="#">Timesheets</a>
+           <span class="navbar-brand">Timesheets</span>
+        </div>
+        <div class="col-4 text-light">
+          <%= if @current_user do %>
+            User: <%= link(@current_user.name,
+              to: Routes.user_path(@conn, :show, @current_user)) %>
+            (<%= link("Logout", to: Routes.session_path(@conn, :delete),
+              method: :delete) %>)
+          <% else %>
+            <%= link("Login", to: Routes.session_path(@conn, :new)) %> |
+            <%= link("Register", to: Routes.user_path(@conn, :new)) %>
+          <% end %>
         </div>
         <div class="col-8">
           <ul class="navbar-nav mr-auto">
