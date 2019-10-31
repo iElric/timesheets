@@ -10,6 +10,8 @@ defmodule Timesheets.Users.User do
     # do self-reference here
     belongs_to(:manager, Timesheets.Users.User)
     has_many(:workers, Timesheets.Users.User, foreign_key: :manager_id)
+    has_many(:jobs, Timesheets.Jobs.Job, foreign_key: :manager_id)
+    has_many(:sheets, Timesheets.Sheets.Sheet, foreign_key: :worker_id)
 
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true

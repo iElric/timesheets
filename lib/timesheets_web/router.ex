@@ -18,10 +18,12 @@ defmodule TimesheetsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/users", UserController
     resources "/sessions", SessionController,
-    # each use can only use one session
-      only: [:new, :create, :delete], singleton: true
+    only: [:new, :create, :delete], singleton: true
+    resources "/users", UserController
+    resources "/sheets", SheetController
+    resources "/jobs", JobController
+    resources "/tasks", TaskController
   end
 
   # Other scopes may use custom stacks.

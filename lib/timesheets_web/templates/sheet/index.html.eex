@@ -1,0 +1,28 @@
+<h1>Listing Sheets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Date</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for sheet <- @sheets do %>
+    <tr>
+      <td><%= sheet.status %></td>
+      <td><%= sheet.date %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.sheet_path(@conn, :show, sheet) %></span>
+        <span><%= link "Edit", to: Routes.sheet_path(@conn, :edit, sheet) %></span>
+        <span><%= link "Delete", to: Routes.sheet_path(@conn, :delete, sheet), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Sheet", to: Routes.sheet_path(@conn, :new) %></span>

@@ -7,7 +7,9 @@ defmodule Timesheets.Jobs.Job do
     field :desc, :string
     field :jobcode, :string
     field :name, :string
-    field :manager_id, :id
+
+    belongs_to(:manager, Timesheets.Users.User)
+    has_many(:tasks, Timesheets.Tasks.Task)
 
     timestamps()
   end
