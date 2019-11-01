@@ -7,11 +7,17 @@ defmodule TimesheetsWeb.SessionController do
 
   def create(conn, %{"email" => email, "password" => password}) do
     user = Timesheets.Users.authenticate(email, password)
+
     if user do
-      conn
+      conn = conn
       |> put_session(:user_id, user.id)
       |> put_flash(:info, "Welcome back #{user.email}")
-      |> redirect(to: Routes.page_path(conn, :index))
+
+      if Timesheets.Users.is_manager?(user.id) do
+        conn |> redirect(to: Routes.sheet_path(conn, :index))
+      else
+        conn |> redirect(to: Routes.task_path(conn, :index))
+      end
     else
       conn
       |> put_flash(:error, "Login failed.")
@@ -25,5 +31,4 @@ defmodule TimesheetsWeb.SessionController do
     |> put_flash(:info, "Logged out.")
     |> redirect(to: Routes.page_path(conn, :index))
   end
-
 end

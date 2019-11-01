@@ -5,8 +5,10 @@ defmodule TimesheetsWeb.TaskController do
   alias Timesheets.Tasks.Task
 
   def index(conn, _params) do
-    tasks = Tasks.list_tasks()
-    render(conn, "index.html", tasks: tasks)
+    # tasks = Tasks.list_tasks()
+    # get all the jobcodes here
+    jobcodes = Timesheets.Jobs.list_jobcodes()
+    render(conn, "index.html", jobcodes: jobcodes)
   end
 
   def new(conn, _params) do

@@ -51,6 +51,15 @@ defmodule Timesheets.Users do
     end
   end
 
+  def is_manager?(id) do
+    user = get_user(id)
+    if is_nil(user.manager_id) do
+      false
+    else
+      true
+    end
+  end
+
   @doc """
   Creates a user.
 

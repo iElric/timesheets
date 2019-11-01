@@ -15,7 +15,7 @@ defmodule Timesheets.Sheets.Sheet do
   @doc false
   def changeset(sheet, attrs) do
     sheet
-    |> cast(attrs, [:status, :date])
-    |> validate_required([:status, :date])
+    |> cast(attrs, [:status, :date, :worker_id])
+    |> validate_required([:status, :date, :worker_id])
   end
 end

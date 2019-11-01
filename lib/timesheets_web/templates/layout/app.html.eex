@@ -20,6 +20,7 @@
               to: Routes.user_path(@conn, :show, @current_user)) %>
             (<%= link("Logout", to: Routes.session_path(@conn, :delete),
               method: :delete) %>)
+            (<%= link("Create", to: Routes.task_path(@conn, :create)) %>)
           <% else %>
             <%= link("Login", to: Routes.session_path(@conn, :new)) %> |
             <%= link("Register", to: Routes.user_path(@conn, :new)) %>

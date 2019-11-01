@@ -59,4 +59,5 @@ defmodule TimesheetsWeb.UserController do
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: Routes.user_path(conn, :index))
   end
+
 end

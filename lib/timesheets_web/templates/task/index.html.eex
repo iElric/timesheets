@@ -1,28 +1,79 @@
-<h1>Listing Tasks</h1>
+<h1>Create Timsheets with Tasks</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Spent hours</th>
-      <th>Desc</th>
+<%= form_for @conn, Routes.sheet_path(@conn, :create), fn f -> %>
+  <div class="form_group">
+    <%= label f, :task1 %>
+    <%= select f, :jobcode1, @jobcodes, class: "form_control" %>
+    <%= label f, :hours%>
+    <%= text_input f, :hours1, class: "form_control"%>
+    <%= label f, :desciption%>
+    <%= text_input f, :desc1, class: "form_control"%>
+  </div>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for task <- @tasks do %>
-    <tr>
-      <td><%= task.spent_hours %></td>
-      <td><%= task.desc %></td>
+  <div class="form_group">
+    <%= label f, :task2 %>
+    <%= select f, :jobcode2, @jobcodes, class: "form_control" %>
+    <%= label f, :hours%>
+    <%= text_input f, :hours2, class: "form_control"%>
+    <%= label f, :desciption%>
+    <%= text_input f, :desc2, class: "form_control"%>
+  </div>
 
-      <td>
-        <span><%= link "Show", to: Routes.task_path(@conn, :show, task) %></span>
-        <span><%= link "Edit", to: Routes.task_path(@conn, :edit, task) %></span>
-        <span><%= link "Delete", to: Routes.task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+  <div class="form_group">
+    <%= label f, :task3 %>
+    <%= select f, :jobcode3, @jobcodes, class: "form_control" %>
+    <%= label f, :hours%>
+    <%= text_input f, :hours3, class: "form_control"%>
+    <%= label f, :desciption%>
+    <%= text_input f, :desc3, class: "form_control"%>
+  </div>
 
-<span><%= link "New Task", to: Routes.task_path(@conn, :new) %></span>
+  <div class="form_group">
+    <%= label f, :task4 %>
+    <%= select f, :jobcode4, @jobcodes, class: "form_control" %>
+    <%= label f, :hours%>
+    <%= text_input f, :hours4, class: "form_control"%>
+    <%= label f, :desciption%>
+    <%= text_input f, :desc4, class: "form_control"%>
+  </div>
+
+  <div class="form_group">
+    <%= label f, :task5 %>
+    <%= select f, :jobcode5, @jobcodes, class: "form_control" %>
+    <%= label f, :hours%>
+    <%= text_input f, :hours5, class: "form_control"%>
+    <%= label f, :desciption%>
+    <%= text_input f, :desc5, class: "form_control"%>
+  </div>
+
+  <div class="form_group">
+    <%= label f, :task6 %>
+    <%= select f, :jobcode6, @jobcodes, class: "form_control" %>
+    <%= label f, :hours%>
+    <%= text_input f, :hours6, class: "form_control"%>
+    <%= label f, :desciption%>
+    <%= text_input f, :desc6, class: "form_control"%>
+  </div>
+
+  <div class="form_group">
+    <%= label f, :task7 %>
+    <%= select f, :jobcode7, @jobcodes, class: "form_control" %>
+    <%= label f, :hours%>
+    <%= text_input f, :hours7, class: "form_control"%>
+    <%= label f, :desciption%>
+    <%= text_input f, :desc7, class: "form_control"%>
+  </div>
+
+  <div class="form_group">
+    <%= label f, :task8 %>
+    <%= select f, :jobcode8, @jobcodes, class: "form_control" %>
+    <%= label f, :hours%>
+    <%= text_input f, :hours8, class: "form_control"%>
+    <%= label f, :desciption%>
+    <%= text_input f, :desc8, class: "form_control"%>
+  </div>
+  <div>
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<%end%>
+
