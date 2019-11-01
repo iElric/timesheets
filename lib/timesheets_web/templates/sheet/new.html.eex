@@ -1,5 +1,36 @@
-<h1>New Sheet</h1>
+<h1>Select date to retrieve timesheet</h1>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.sheet_path(@conn, :create)) %>
+<%= form_for @conn, Routes.sheet_path(@conn, :new), fn f -> %>
+  <div class="form_group">
+    <%= label f, :choose_a_date %>
+    <%= select f, :date, @dates, class: "form_control" %>
+    </div>
 
-<span><%= link "Back", to: Routes.sheet_path(@conn, :index) %></span>
+    <div>
+        <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
+<%end%>
+
+</br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Spent_hours</th>
+      <th>Desc</th>
+      <th>Job Code</th>
+      <th>Approved</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for task <- @tasks do %>
+        <tr>
+          <td><%= task.spent_hours %></td>
+          <td><%= task.desc %></td>
+          <td><%= Timesheets.Jobs.get_jobcode(task.job_id)%></td>
+          <td><%= @status %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

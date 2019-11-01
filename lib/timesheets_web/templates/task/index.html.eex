@@ -1,77 +1,143 @@
 <h1>Create Timsheets with Tasks</h1>
 
 <%= form_for @conn, Routes.sheet_path(@conn, :create), fn f -> %>
-  <div class="form_group">
-    <%= label f, :task1 %>
-    <%= select f, :jobcode1, @jobcodes, class: "form_control" %>
-    <%= label f, :hours%>
-    <%= text_input f, :hours1, class: "form_control"%>
-    <%= label f, :desciption%>
-    <%= text_input f, :desc1, class: "form_control"%>
-  </div>
 
-  <div class="form_group">
-    <%= label f, :task2 %>
-    <%= select f, :jobcode2, @jobcodes, class: "form_control" %>
-    <%= label f, :hours%>
-    <%= text_input f, :hours2, class: "form_control"%>
-    <%= label f, :desciption%>
-    <%= text_input f, :desc2, class: "form_control"%>
+<div class="form_group">
+  <div class="form-row">
+    <div class="col">
+      <%= label f, :task1%>
+      <%= select f, :jobcode1, @jobcodes, class: "form_control" %>
+    </div>
+    <div class="col">
+      <%= label f, :hours%>
+      <%= text_input f, :hours1, class: "form_control"%>
+    </div>
+    <div class="col">
+      <%= label f, :desciption%>
+      <%= text_input f, :desc1, class: "form_control"%>
+    </div>
   </div>
+</div>
 
-  <div class="form_group">
+<div class="form_group">
+  <div class="form-row">
+    <div class="col">
+      <%= label f, :task2 %>
+      <%= select f, :jobcode2, @jobcodes, class: "form_control" %>
+    </div>
+    <div class="col">
+      <%= label f, :hours%>
+      <%= text_input f, :hours2, class: "form_control"%>
+    </div>
+    <div class="col">
+      <%= label f, :desciption%>
+      <%= text_input f, :desc2, class: "form_control"%>
+    </div>
+  </div>
+</div>
+
+<div class="form_group">
+  <div class="form-row">
+    <div class="col">
     <%= label f, :task3 %>
     <%= select f, :jobcode3, @jobcodes, class: "form_control" %>
+    </div>
+    <div class="col">
     <%= label f, :hours%>
     <%= text_input f, :hours3, class: "form_control"%>
+    </div>
+    <div class="col">
     <%= label f, :desciption%>
     <%= text_input f, :desc3, class: "form_control"%>
+    </div>
+  </div>
   </div>
 
   <div class="form_group">
+    <div class="form-row">
+    <div class="col">
     <%= label f, :task4 %>
     <%= select f, :jobcode4, @jobcodes, class: "form_control" %>
+    </div>
+    <div class="col">
     <%= label f, :hours%>
     <%= text_input f, :hours4, class: "form_control"%>
+    </div>
+    <div class="col">
     <%= label f, :desciption%>
     <%= text_input f, :desc4, class: "form_control"%>
+    </div>
+    </div>
   </div>
 
   <div class="form_group">
+  <div class="form-row">
+    <div class="col">
     <%= label f, :task5 %>
     <%= select f, :jobcode5, @jobcodes, class: "form_control" %>
+    </div>
+    <div class="col">
     <%= label f, :hours%>
     <%= text_input f, :hours5, class: "form_control"%>
+    </div>
+    <div class="col">
     <%= label f, :desciption%>
     <%= text_input f, :desc5, class: "form_control"%>
   </div>
+  </div>
+  </div>
 
   <div class="form_group">
+  <div class="form-row">
+    <div class="col">
     <%= label f, :task6 %>
     <%= select f, :jobcode6, @jobcodes, class: "form_control" %>
+    </div>
+    <div class="col">
     <%= label f, :hours%>
     <%= text_input f, :hours6, class: "form_control"%>
+    </div>
+    <div class="col">
     <%= label f, :desciption%>
     <%= text_input f, :desc6, class: "form_control"%>
   </div>
+  </div>
+  </div>
 
   <div class="form_group">
+  <div class="form-row">
+    <div class="col">
     <%= label f, :task7 %>
     <%= select f, :jobcode7, @jobcodes, class: "form_control" %>
+    </div>
+    <div class="col">
     <%= label f, :hours%>
     <%= text_input f, :hours7, class: "form_control"%>
+    </div>
+    <div class="col">
     <%= label f, :desciption%>
     <%= text_input f, :desc7, class: "form_control"%>
   </div>
+  </div>
+  </div>
 
   <div class="form_group">
+  <div class="form-row">
+    <div class="col">
     <%= label f, :task8 %>
     <%= select f, :jobcode8, @jobcodes, class: "form_control" %>
+    </div>
+    <div class="col">
     <%= label f, :hours%>
     <%= text_input f, :hours8, class: "form_control"%>
+    </div>
+    <div class="col">
     <%= label f, :desciption%>
     <%= text_input f, :desc8, class: "form_control"%>
   </div>
+  </div>
+  </div>
+  
   <div>
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>

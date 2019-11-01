@@ -1,2 +1,14 @@
-<h1>Show Sheet</h1>
+<h1>Select date to retrieve timesheet</h1>
+
+<%= form_for @conn, Routes.sheet_path(@conn, :show), fn f -> %>
+  <div class="form_group">
+    <%= label f, :choose_a_date %>
+    <%= select f, :date, @dates, class: "form_control" %>
+    </div>
+
+    <div>
+        <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
+<%end%>
+
 

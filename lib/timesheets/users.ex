@@ -43,6 +43,17 @@ defmodule Timesheets.Users do
     Repo.get_by(User, email: email)
   end
 
+  def get_worker_names_by_manager_id(manager_id) do
+    query = from(w in User, where: w.manager_id == ^manager_id, select: w.name)
+    Repo.all(query)
+  end
+
+  # now consider no duplicate name
+  def get_id_by_name(name) do
+    query = from(u in User, where: u.name == ^name, select: u.id)
+    Repo.all(query)
+  end
+
   def authenticate(email, pass) do
     user = Repo.get_by(User, email: email)
     case Argon2.check_pass(user, pass) do
@@ -54,9 +65,9 @@ defmodule Timesheets.Users do
   def is_manager?(id) do
     user = get_user(id)
     if is_nil(user.manager_id) do
-      false
-    else
       true
+    else
+      false
     end
   end
 

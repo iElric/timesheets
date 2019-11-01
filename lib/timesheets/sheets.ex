@@ -21,6 +21,16 @@ defmodule Timesheets.Sheets do
     Repo.all(Sheet)
   end
 
+  def get_status_by_worker_id_date(worker_id, date) do
+    query = from(s in Sheet, where: s.worker_id == ^worker_id, where: s.date == ^date, select: s.status)
+    Repo.one(query)
+  end
+
+  def get_id_by_worker_id_date(worker_id, date) do
+    query = from(s in Sheet, where: s.worker_id == ^worker_id, where: s.date == ^date, select: s.id)
+    Repo.one(query)
+  end
+
   @doc """
   Gets a single sheet.
 

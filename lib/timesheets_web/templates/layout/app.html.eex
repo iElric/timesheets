@@ -12,29 +12,24 @@
     <div class="container">
       <nav class="navbar navbar-expand-sm navbar-light bg-white">
         <div class="col-4">
-           <span class="navbar-brand">Timesheets</span>
+           <span class="navbar-brand">Timesheets App</span>
         </div>
-        <div class="col-4 text-light">
+        <div class="col-6 text-light">
           <%= if @current_user do %>
             User: <%= link(@current_user.name,
               to: Routes.user_path(@conn, :show, @current_user)) %>
             (<%= link("Logout", to: Routes.session_path(@conn, :delete),
               method: :delete) %>)
-            (<%= link("Create", to: Routes.task_path(@conn, :create)) %>)
+              <%= if Timesheets.Users.is_manager?(@conn.assigns.current_user.id) do %>
+                (<%= link("View", to: Routes.sheet_path(@conn, :index)) %>)
+             <% else %>
+                (<%= link("Create", to: Routes.task_path(@conn, :create)) %>)
+                (<%= link("View", to: Routes.sheet_path(@conn, :new)) %>)
+             <% end %>
           <% else %>
             <%= link("Login", to: Routes.session_path(@conn, :new)) %> |
             <%= link("Register", to: Routes.user_path(@conn, :new)) %>
           <% end %>
-        </div>
-        <div class="col-8">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Tasks</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Users</a>
-            </li>
-          </ul>
         </div>
       </nav>
 

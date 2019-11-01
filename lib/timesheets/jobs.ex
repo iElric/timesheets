@@ -12,6 +12,10 @@ defmodule Timesheets.Jobs do
     Repo.get_by(Job, jobcode: jobcode).id
   end
 
+  def get_jobcode(id) do
+    get_job!(id).jobcode
+  end
+
   def get_budget(id) do
     Repo.get(Job, id).budget
   end

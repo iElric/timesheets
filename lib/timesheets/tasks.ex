@@ -21,6 +21,11 @@ defmodule Timesheets.Tasks do
     Repo.all(Task)
   end
 
+  def get_tasks_by_sheet_id(sheet_id) do
+    query = from(t in Task, where: t.sheet_id == ^sheet_id)
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single task.
 
