@@ -1,17 +1,6 @@
-<h1>Review a Timesheet</h1>
+<h1>Approve</h1>
+<h2>TimeSheet of <%= @worker %> on <%= @date %></h2>
 
-<%= form_for @conn, Routes.sheet_path(@conn, :new), fn f -> %>
-  <div class="form_group">
-    <%= label f, :choose_a_date %>
-    <%= select f, :date, @dates, class: "form_control" %>
-    </div>
-
-    <div>
-        <%= submit "Submit", class: "btn btn-primary" %>
-    </div>
-<%end%>
-
-</br>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -34,3 +23,7 @@
     <% end %>
   </tbody>
 </table>
+
+<%= if !@status do %>
+<%= button("Approve", to: Routes.sheet_path(@conn, :subtract, %{sheet_id: @sheet_id}), class: "btn btn-primary") %>
+<% end %>

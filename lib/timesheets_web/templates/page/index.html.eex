@@ -1,0 +1,21 @@
+<h1 class="display-3 text-center">Welcome to Timesheets App</h1>
+
+<h2>As a manager</h2>
+<ul>
+<li>View the workers' timesheets by date</li>
+<li>Approve the workers timesheets</li>
+</ul>
+
+<h2>As a worker</h2>
+<ul>
+<li>Create a timesheet</li>
+<li>View your timesheets by date</li>
+</ul>
+
+<h2>Notice</h2>
+<ul>
+<li>A worker can only have one timesheet per day, create duplicate sheet won't success</li>
+<li>A manager can only view his/her supervisees' sheets</li>
+<li>A worker can only create timesheet on current date</li>
+
+</ul>

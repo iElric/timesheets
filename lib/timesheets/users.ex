@@ -51,7 +51,7 @@ defmodule Timesheets.Users do
   # now consider no duplicate name
   def get_id_by_name(name) do
     query = from(u in User, where: u.name == ^name, select: u.id)
-    Repo.all(query)
+    Repo.one(query)
   end
 
   def authenticate(email, pass) do

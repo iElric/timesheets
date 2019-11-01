@@ -16,6 +16,7 @@ defmodule Timesheets.Sheets.Sheet do
   def changeset(sheet, attrs) do
     sheet
     |> cast(attrs, [:status, :date, :worker_id])
+    |> unique_constraint(:worker_id, name: :sheets_worker_id_date_index)
     |> validate_required([:status, :date, :worker_id])
   end
 end

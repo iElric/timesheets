@@ -1,6 +1,6 @@
-<h1>Select a sheet</h1>
+<h1>Select a Sheet</h1>
 
-<%= form_for @conn, Routes.sheet_path(@conn, :index), fn f -> %>
+<%= form_for @conn, Routes.sheet_path(@conn, :approve), fn f -> %>
   <div class="form_group">
     <%= label f, :choose_a_woker %>
     <%= select f, :worker, @worker_names, class: "form_control" %>
@@ -12,6 +12,4 @@
   <div>
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
-
-  
 <%end%>

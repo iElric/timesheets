@@ -5,29 +5,54 @@ defmodule TimesheetsWeb.SheetController do
   alias Timesheets.Sheets.Sheet
 
   defp date_range_to_string_list() do
-    Date.range(~D[2019-09-01], Date.utc_today()) |> Enum.map(fn d -> Date.to_string(d) end) |> Enum.reverse()
+    Date.range(~D[2019-09-01], Date.utc_today())
+    |> Enum.map(fn d -> Date.to_string(d) end)
+    |> Enum.reverse()
   end
 
-  def index(conn, %{worker: worker, date: date}) do
-    current_user = conn.assigns.current_user.id
-    worker_names = Timesheets.Users.get_worker_names_by_manager_id(current_user)
+  def subtract(conn, %{"sheet_id" => sheet_id}) do
+    # change the corresponding sheet status
+    Timesheets.Sheets.update_sheet(Timesheets.Sheets.get_sheet!(sheet_id), %{status: true})
+    # subtract the task hours in job
+    tasks = Timesheets.Tasks.get_tasks_by_sheet_id(sheet_id)
+    itr = Enum.map(tasks, fn t -> {t.spent_hours, t.job_id} end)
+
+    Enum.map(itr, fn {hour, job_id} ->
+      Timesheets.Jobs.update_job(Timesheets.Jobs.get_job!(job_id), %{
+        budget: Timesheets.Jobs.get_budget(job_id) - hour
+      })
+    end)
+
+    render(conn, "success.html")
+  end
+
+  def approve(conn, %{"worker" => worker, "date" => date}) do
+    date_string = date
     {:ok, date} = Date.from_iso8601(date)
     worker_id = Timesheets.Users.get_id_by_name(worker)
     status = Timesheets.Sheets.get_status_by_worker_id_date(worker_id, date)
     sheet_id = Timesheets.Sheets.get_id_by_worker_id_date(worker_id, date)
-    tasks = if is_nil(sheet_id) do
-      []
-    else
-      Timesheets.Tasks.get_tasks_by_sheet_id(sheet_id)
-    end
-    render(conn, "index.html", tasks: tasks, status: status, dates: date_range_to_string_list(), worker_names: worker_names)
+
+    tasks =
+      if is_nil(sheet_id) do
+        []
+      else
+        Timesheets.Tasks.get_tasks_by_sheet_id(sheet_id)
+      end
+
+    render(conn, "approve.html",
+      tasks: tasks,
+      status: status,
+      date: date_string,
+      worker: worker,
+      sheet_id: sheet_id
+    )
   end
 
   def index(conn, _params) do
-    IO.inspect "---------------------------------"
     current_user = conn.assigns.current_user.id
     worker_names = Timesheets.Users.get_worker_names_by_manager_id(current_user)
-    render(conn, "index.html", tasks: [], status: false, worker_names: worker_names, dates: date_range_to_string_list())
+    render(conn, "index.html", worker_names: worker_names, dates: date_range_to_string_list())
   end
 
   def new(conn, %{"date" => date}) do
@@ -35,11 +60,14 @@ defmodule TimesheetsWeb.SheetController do
     current_user = conn.assigns.current_user.id
     status = Timesheets.Sheets.get_status_by_worker_id_date(current_user, date)
     sheet_id = Timesheets.Sheets.get_id_by_worker_id_date(current_user, date)
-    tasks = if is_nil(sheet_id) do
-      []
-    else
-      Timesheets.Tasks.get_tasks_by_sheet_id(sheet_id)
-    end
+
+    tasks =
+      if is_nil(sheet_id) do
+        []
+      else
+        Timesheets.Tasks.get_tasks_by_sheet_id(sheet_id)
+      end
+
     render(conn, "new.html", tasks: tasks, status: status, dates: date_range_to_string_list())
   end
 
@@ -86,8 +114,15 @@ defmodule TimesheetsWeb.SheetController do
         else
           # if the input is float, only count the integer part, if is other string, count as 0
           case Integer.parse(h) do
-            :error -> 0
-            {h, _} -> h
+            :error ->
+              0
+
+            {h, _} ->
+              if h < 0 do
+                0
+              else
+                h
+              end
           end
         end
       end)
@@ -97,41 +132,43 @@ defmodule TimesheetsWeb.SheetController do
     if total_hours === 8 do
       current_user = conn.assigns.current_user.id
       # insert a sheet first
-      {:ok, sheet} =
+      # TODO: one worker can only have one sheet on one day
+      {ok_or_error, sheet_or_info} =
         Timesheets.Sheets.create_sheet(%{
           worker_id: current_user,
           date: Date.utc_today(),
           status: false
         })
 
-      # insert these tasks
-      job_ids =
-        Enum.map(jobcodes, fn jobcode -> Timesheets.Jobs.get_job_id_by_jobcode(jobcode) end)
+        IO.inspect {ok_or_error, sheet_or_info}
+      # this sheet not exist
+      if ok_or_error === :ok do
+        # insert these tasks
+        job_ids =
+          Enum.map(jobcodes, fn jobcode -> Timesheets.Jobs.get_job_id_by_jobcode(jobcode) end)
 
-      itr = Enum.zip(hours, job_ids)
-      itr = Enum.zip(itr, descs)
+        itr = Enum.zip(hours, job_ids)
+        itr = Enum.zip(itr, descs)
 
-      Enum.map(itr, fn {{hour, job_id}, desc} ->
-        if hour > 0 do
-          Timesheets.Tasks.create_task(%{
-            spent_hours: hour,
-            desc: desc,
-            job_id: job_id,
-            sheet_id: sheet.id
-          })
-        end
-      end)
+        Enum.map(itr, fn {{hour, job_id}, desc} ->
+          if hour > 0 do
+            Timesheets.Tasks.create_task(%{
+              spent_hours: hour,
+              desc: desc,
+              job_id: job_id,
+              sheet_id: sheet_or_info.id
+            })
+          end
+        end)
 
-      # substract hours in job
-      # TODO: move to manager page to approve
-      Enum.map(itr, fn {{hour, job_id}, _} ->
-        if hour > 0 do
-          Timesheets.Jobs.update_job(Timesheets.Jobs.get_job!(job_id), %{
-            budget: Timesheets.Jobs.get_budget(job_id) - hour
-          })
-        end
-      end)
-      render(conn, "new.html", tasks: [], status: false, dates: date_range_to_string_list())
+        render(conn, "new.html", tasks: [], status: false, dates: date_range_to_string_list())
+      else
+        # this sheet exist
+        IO.inspect "should flash"
+        conn
+        |> put_flash(:info, sheet_or_info)
+        |> redirect(to: Routes.task_path(conn, :create))
+      end
     else
       conn
       |> put_flash(:info, "All the hours of tasks should add up to 8")
