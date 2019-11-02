@@ -1,0 +1,36 @@
+
+Web Dev Fall 2019 HW06 Status
+
+Answer the following questions:
+
+
+1. What's your name?
+Yexin Wang
+
+
+2. What's the URL of the github repo with your work for this HW?
+https://github.com/iElric/timesheets.git
+
+
+3. What's the version number of your github release?
+1
+
+
+4. What's the URL that you deployed to?
+http://time1.ielric.com/
+http://time2.elephantdong.com
+
+5. Is your app functionality complete? If not, what's missing?
+Yes
+
+
+6. Is your app properly deployed? If not, what went wrong?
+Yes
+
+
+
+
+And here's a list of tasks for grading comments. Just leave this here:
+ - Development
+ - Deployment
+ - Submission

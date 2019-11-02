@@ -3,12 +3,12 @@
 <h2>As a manager</h2>
 <ul>
 <li>View the workers' timesheets by date</li>
-<li>Approve the workers timesheets</li>
+<li>Approve the workers' timesheets</li>
 </ul>
 
 <h2>As a worker</h2>
 <ul>
-<li>Create a timesheet</li>
+<li>Create a timesheet on any day</li>
 <li>View your timesheets by date</li>
 </ul>
 
@@ -18,5 +18,7 @@
 <li>A manager can only view his/her supervisees' sheets</li>
 <li>A worker can only create timesheet on current date</li>
 <li>When you log in, you will have different view depends on you user role</li>
+<li>The date drop down is in range from 2019-9-1 to today</li>
+<li>The job budget have been properly subtracted</li>
 
 </ul>
