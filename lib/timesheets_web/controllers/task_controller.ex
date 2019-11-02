@@ -7,8 +7,11 @@ defmodule TimesheetsWeb.TaskController do
   def index(conn, _params) do
     # tasks = Tasks.list_tasks()
     # get all the jobcodes here
+
     jobcodes = Timesheets.Jobs.list_jobcodes()
-    render(conn, "index.html", jobcodes: jobcodes)
+    render(conn, "index.html", jobcodes: jobcodes, dates: Date.range(~D[2019-09-01], Date.utc_today())
+    |> Enum.map(fn d -> Date.to_string(d) end)
+    |> Enum.reverse())
   end
 
   def new(conn, _params) do

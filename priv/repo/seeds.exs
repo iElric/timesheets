@@ -16,7 +16,13 @@ alias Timesheets.Jobs.Job
 
 pw = Argon2.hash_pwd_salt("password123456")
 
-Repo.insert!(%User{name: "Alice", email: "alice@example.com", password_hash: pw})
-Repo.insert!(%User{name: "Bob", email: "bob@example.com", password_hash: pw, manager_id: 1})
-Repo.insert!(%Job{manager_id: 1, budget: 10, jobcode: "JOBA1", desc: "This is JOBA1.", name: "todo1"})
-Repo.insert!(%Job{manager_id: 1, budget: 20, jobcode: "JOBB2", desc: "This is JOBb2.", name: "todo2"})
+Repo.insert!(%User{name: "Alice Anderson", email: "alice@acme.com", password_hash: pw})
+Repo.insert!(%User{name: "Bob Anderson", email: "bob@acme.com", password_hash: pw, manager_id: 1})
+Repo.insert!(%User{name: "Carol Anderson", email: "carol@acme.com", password_hash: pw, manager_id: 1})
+Repo.insert!(%User{name: "Dave Anderson", email: "dave@acme.com", password_hash: pw, manager_id: 1})
+Repo.insert!(%Job{manager_id: 1, budget: 20, jobcode: "VAOR-01", desc: "hard to do", name: "Cyborg Arm"})
+Repo.insert!(%Job{manager_id: 1, budget: 45, jobcode: "VAOR-02", desc: "easy", name: "Sobriety Pill"})
+
+
+
+

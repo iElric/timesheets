@@ -1,6 +1,11 @@
+<%= if !Timesheets.Users.is_manager?(@conn.assigns.current_user.id) do %>
 <h1>Create Timsheets with Tasks</h1>
 
 <%= form_for @conn, Routes.sheet_path(@conn, :create), fn f -> %>
+<div class="form_group">
+      <%= label f, :choose_a_date%>
+      <%= select f, :date, @dates, class: "form_control" %>
+</div>
 
 <div class="form_group">
   <div class="form-row">
@@ -141,5 +146,6 @@
   <div>
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
-<%end%>
+<% end %>
+<% end %>
 

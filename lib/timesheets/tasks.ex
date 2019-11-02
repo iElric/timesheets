@@ -55,6 +55,7 @@ defmodule Timesheets.Tasks do
 
   """
   def create_task(attrs \\ %{}) do
+
     %Task{}
     |> Task.changeset(attrs)
     |> Repo.insert()

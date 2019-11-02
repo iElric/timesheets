@@ -17,5 +17,6 @@
 <li>A worker can only have one timesheet per day, create duplicate sheet won't success</li>
 <li>A manager can only view his/her supervisees' sheets</li>
 <li>A worker can only create timesheet on current date</li>
+<li>When you log in, you will have different view depends on you user role</li>
 
 </ul>

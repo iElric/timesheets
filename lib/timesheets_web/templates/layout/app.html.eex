@@ -15,6 +15,7 @@
            <span class="navbar-brand">Timesheets App</span>
         </div>
         <div class="col-6 text-light">
+        <%= link("Home ", to: Routes.page_path(@conn, :index)) %>
           <%= if @current_user do %>
             User: <%= link(@current_user.name,
               to: Routes.user_path(@conn, :show, @current_user)) %>
@@ -27,8 +28,7 @@
                 (<%= link("View", to: Routes.sheet_path(@conn, :new)) %>)
              <% end %>
           <% else %>
-            <%= link("Login", to: Routes.session_path(@conn, :new)) %> |
-            <%= link("Register", to: Routes.user_path(@conn, :new)) %>
+            <%= link("Login", to: Routes.session_path(@conn, :new)) %>
           <% end %>
         </div>
       </nav>

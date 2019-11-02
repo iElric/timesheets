@@ -1,3 +1,4 @@
+<%= if Timesheets.Users.is_manager?(@conn.assigns.current_user.id) do %>
 <h1>Select a Sheet</h1>
 
 <%= form_for @conn, Routes.sheet_path(@conn, :approve), fn f -> %>
@@ -12,4 +13,5 @@
   <div>
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
-<%end%>
+<% end %>
+<% end %>

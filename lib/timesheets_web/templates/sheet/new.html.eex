@@ -1,4 +1,5 @@
-<h1>Review a Timesheet</h1>
+<%= if !Timesheets.Users.is_manager?(@conn.assigns.current_user.id) do %>
+<h1>Select a Date to Review a Timesheet</h1>
 
 <%= form_for @conn, Routes.sheet_path(@conn, :new), fn f -> %>
   <div class="form_group">
@@ -34,3 +35,5 @@
     <% end %>
   </tbody>
 </table>
+<% end %>
+

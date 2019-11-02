@@ -21,12 +21,16 @@ defmodule TimesheetsWeb.Router do
     post "/sheet/approve", SheetController, :approve
     post "/sheet/subtract", SheetController, :subtract
     post "/sheets/new", SheetController, :new
+    get "/sheets/new", SheetController, :new
+    resources "/users", UserController,
+    only: [:show]
     resources "/sessions", SessionController,
     only: [:new, :create, :delete], singleton: true
-    resources "/users", UserController
-    resources "/sheets", SheetController
-    resources "/jobs", JobController
-    resources "/tasks", TaskController
+    resources "/sheets", SheetController,
+    only: [:create, :index]
+    #resources "/jobs", JobController
+    resources "/tasks", TaskController,
+    only: [:create, :index]
   end
 
   # Other scopes may use custom stacks.

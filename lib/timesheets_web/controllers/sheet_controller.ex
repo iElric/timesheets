@@ -60,6 +60,9 @@ defmodule TimesheetsWeb.SheetController do
     current_user = conn.assigns.current_user.id
     status = Timesheets.Sheets.get_status_by_worker_id_date(current_user, date)
     sheet_id = Timesheets.Sheets.get_id_by_worker_id_date(current_user, date)
+    IO.inspect(date)
+    IO.inspect(status)
+    IO.inspect(sheet_id)
 
     tasks =
       if is_nil(sheet_id) do
@@ -68,6 +71,7 @@ defmodule TimesheetsWeb.SheetController do
         Timesheets.Tasks.get_tasks_by_sheet_id(sheet_id)
       end
 
+    IO.inspect(tasks)
     render(conn, "new.html", tasks: tasks, status: status, dates: date_range_to_string_list())
   end
 
@@ -100,11 +104,13 @@ defmodule TimesheetsWeb.SheetController do
         "desc5" => desc5,
         "desc6" => desc6,
         "desc7" => desc7,
-        "desc8" => desc8
+        "desc8" => desc8,
+        "date" => date
       }) do
     hours = [hours1, hours2, hours3, hours4, hours5, hours6, hours7, hours8]
     jobcodes = [jodcode1, jodcode2, jodcode3, jodcode4, jodcode5, jodcode6, jodcode7, jodcode8]
     descs = [desc1, desc2, desc3, desc4, desc5, desc6, desc7, desc8]
+    {_, date} = Date.from_iso8601(date)
     # map hours from string to in
     # filer to have only int greater than 0
     hours =
@@ -131,16 +137,14 @@ defmodule TimesheetsWeb.SheetController do
 
     if total_hours === 8 do
       current_user = conn.assigns.current_user.id
-      # insert a sheet first
-      # TODO: one worker can only have one sheet on one day
+
       {ok_or_error, sheet_or_info} =
         Timesheets.Sheets.create_sheet(%{
           worker_id: current_user,
-          date: Date.utc_today(),
+          date: date,
           status: false
         })
 
-        IO.inspect {ok_or_error, sheet_or_info}
       # this sheet not exist
       if ok_or_error === :ok do
         # insert these tasks
@@ -152,6 +156,13 @@ defmodule TimesheetsWeb.SheetController do
 
         Enum.map(itr, fn {{hour, job_id}, desc} ->
           if hour > 0 do
+            desc =
+              if desc === "" do
+                "No description"
+              else
+                desc
+              end
+
             Timesheets.Tasks.create_task(%{
               spent_hours: hour,
               desc: desc,
@@ -164,7 +175,6 @@ defmodule TimesheetsWeb.SheetController do
         render(conn, "new.html", tasks: [], status: false, dates: date_range_to_string_list())
       else
         # this sheet exist
-        IO.inspect "should flash"
         conn
         |> put_flash(:info, sheet_or_info)
         |> redirect(to: Routes.task_path(conn, :create))

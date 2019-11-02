@@ -1,3 +1,4 @@
+<%= if Timesheets.Users.is_manager?(@conn.assigns.current_user.id) do %>
 <h1>Approve</h1>
 <h2>TimeSheet of <%= @worker %> on <%= @date %></h2>
 
@@ -26,4 +27,5 @@
 
 <%= if !@status do %>
 <%= button("Approve", to: Routes.sheet_path(@conn, :subtract, %{sheet_id: @sheet_id}), class: "btn btn-primary") %>
+<% end %>
 <% end %>
