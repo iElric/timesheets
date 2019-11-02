@@ -18,7 +18,7 @@ https://github.com/iElric/timesheets.git
 
 4. What's the URL that you deployed to?
 http://time1.ielric.com/
-http://time2.elephantdong.com
+
 
 5. Is your app functionality complete? If not, what's missing?
 Yes

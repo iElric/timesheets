@@ -6,7 +6,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name time2.elephantdong.com;
+    server_name time1.ielric.com;
 
     location / {
         proxy_pass http://timesheets_app;
